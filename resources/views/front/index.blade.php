@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NailGlow Studio</title>
+    <title>Snail Studio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
@@ -12,7 +12,7 @@
     <nav class="bg-white shadow-md py-4 px-6 flex justify-between items-center">
         <div class="flex items-center space-x-2">
             <i class="fas fa-brush text-pink-400 text-2xl"></i>
-            <h1 class="text-2xl font-bold text-pink-600">NailGlow Studio</h1>
+            <h1 class="text-2xl font-bold text-pink-600">Snail Studio</h1>
         </div>
         <div class="space-x-4">
             <a href="#services" class="text-blue-500 hover:text-blue-700 transition">Services</a>
@@ -53,42 +53,16 @@
                 Our Services
             </h3>
             <div class="grid grid-cols-3 gap-8">
+                @foreach ($services as $s)
                 <div class="text-center bg-pink-50 p-6 rounded-lg shadow-sm">
                     <i class="fas fa-brush mx-auto text-blue-400 text-5xl mb-4"></i>
-                    <h4 class="text-xl font-semibold mb-2 text-gray-800">Classic Manicure</h4>
-                    <img src="{{ asset('img/Manicure.jpg')}}" alt="" style="height: 400px; width:100vw">
-                    <p class="text-gray-600">Perfect shape and polish</p>
+                    <h4 class="text-xl font-semibold mb-2 text-gray-800">{{ $s->name }}</h4>
+                    <img src="{{ Storage::url($s->photo)}}" alt="" style="height: 400px; width:100vw">
+                    <p class="text-gray-600">{{ $s->description }}</p>
+                    <p class="text-gray-600">{{ $s->price }}</p>
+                    <p class="text-gray-600">{{ $s->duration_minutes }}</p>
                 </div>
-                <div class="text-center bg-pink-50 p-6 rounded-lg shadow-sm">
-                    <i class="fas fa-brush mx-auto text-blue-400 text-5xl mb-4"></i>
-                    <h4 class="text-xl font-semibold mb-2 text-gray-800">Classic Pedicure</h4>
-                    <img src="{{ asset('img/Pedicure.jpg')}}" alt="" style="height: 400px; width:100vw">
-                    <p class="text-gray-600">Perfect shape and polish</p>
-                </div>
-                <div class="text-center bg-pink-50 p-6 rounded-lg shadow-sm">
-                    <i class="fas fa-heart mx-auto text-blue-400 text-5xl mb-4"></i>
-                    <h4 class="text-xl font-semibold mb-2 text-gray-800">Menicure & Pedicure</h4>
-                    <img src="{{ asset('/img/Manicure dan Pedicure.jpg')}}" alt="" style="height: 400px; width:100vw">
-                    <p class="text-gray-600">Long-lasting, chip-free finish</p>
-                </div>
-                <div class="text-center bg-pink-50 p-6 rounded-lg shadow-sm">
-                    <i class="fas fa-cut mx-auto text-blue-400 text-5xl mb-4"></i>
-                    <h4 class="text-xl font-semibold mb-2 text-gray-800">Nail Gel Basic</h4>
-                    <img src="{{ asset('/img/Nailart basic.jpeg')}}" alt="" style="height: 400px; width:100vw">
-                    <p class="text-gray-600">Custom creative designs</p>
-                </div>
-                <div class="text-center bg-pink-50 p-6 rounded-lg shadow-sm">
-                    <i class="fas fa-heart mx-auto text-blue-400 text-5xl mb-4"></i>
-                    <h4 class="text-xl font-semibold mb-2 text-gray-800">Nail Gel Medium</h4>
-                    <img src="{{ asset('/img/Nail Gel Medium.jpg')}}" alt="" style="height: 400px; width:100vw">
-                    <p class="text-gray-600">Long-lasting, chip-free finish</p>
-                </div>
-                <div class="text-center bg-pink-50 p-6 rounded-lg shadow-sm">
-                    <i class="fas fa-heart mx-auto text-blue-400 text-5xl mb-4"></i>
-                    <h4 class="text-xl font-semibold mb-2 text-gray-800">Nail Gel Premium</h4>
-                    <img src="{{ asset('/img/Nail Gel Hard.jpg')}}" alt="" style="height: 400px; width:100vw">
-                    <p class="text-gray-600">Long-lasting, chip-free finish</p>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

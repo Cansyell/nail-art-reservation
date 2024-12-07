@@ -11,5 +11,14 @@ class FrontController extends Controller
         $services = Service::all();
         return view('front.index', compact('services'));
     }
+    public function create(){
+        //
+    }
+    public function reservation(Request $request){
+        $selectedService = Service::findOrFail($request->input('service'));
+        $services = Service::all();
+        
 
+        return view('front.reservation', compact('services','selectedService'));
+    }
 }

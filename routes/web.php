@@ -4,8 +4,11 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\ReservationController;
 
 Route::get('/', [FrontController::class, 'index'])->name('front.index');
+Route::get('/reservation', [FrontController::class, 'reservation'])->name('reservation');
+Route::post('/book-appointment', [ReservationController::class, 'book'])->name('book.appointment');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

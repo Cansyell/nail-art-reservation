@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
@@ -12,7 +13,7 @@ class ServiceController extends Controller
     }
     public function edit(Service $service)
     {
-        //
+        return view('service.edit', compact('service'));
     }
     public function create(){
         return view('service.create');
@@ -45,9 +46,41 @@ class ServiceController extends Controller
 
         return redirect()->route('service.index')->with('success', 'Service created successfully');
      }
+     public function update(Request $request, Service $service){
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:500',
+            'price' => 'required|numeric|min:0',
+            'duration_minutes' => 'required|integer|min:1',
+            'category' => 'required|in:manicure,pedicure,nail_art,treatment',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
 
+        // Handle photo upload
+        if ($request->hasFile('photo')) {
+            // Delete old photo if exists
+            if ($service->photo && Storage::exists($service->photo)) {
+                Storage::delete($service->photo);
+            }
+
+            // Store new photo
+            $photoPath = $request->file('photo')->store('service_photos', 'public');
+            $validatedData['photo'] = $photoPath;
+        }
+
+        // Update service
+        $service->update($validatedData);
+
+        return redirect()->route('service.index')
+            ->with('success', 'Service updated successfully.');
+    
+    }
     public function destroy(Service $service){
+
+        if($service->photo && Storage::exists($service->photo)){
+            Storage::delete($service->photo);
+        }
         $service->delete();
-        return redirect()->route('service.index');
+        return redirect()->route('service.index')->with('succes','Service deleted successfully');
     }
 }

@@ -10,6 +10,15 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{-- table --}}
+                    @if ($errors->any())
+                        <div class="mb-5 text-red-600">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <a href="{{ route('service.create') }}" class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 mt-3 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">tambah</a>
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
                             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -49,7 +58,12 @@
                                             {{ $s->price}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                            <a href="{{ route('service.edit', $s->id)}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                            <form action="{{ route('service.destroy', $s->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete Service</button>
+                                            </form>
                                         </td>
                                     </tr>
                                     @endforeach

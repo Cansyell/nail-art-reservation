@@ -49,6 +49,7 @@ class ReservationController extends Controller
         // Create a new transaction
         $transaction = Transaction::create([
             'reservation_id' => $reservation->id,
+            'service_id'=> $reservation->service_id,
             'total_amount' => $totalAmount,
             'discount' => $discount,
             'final_amount' => $finalAmount,
@@ -95,7 +96,7 @@ class ReservationController extends Controller
         }put();
         }
         public function index(){
-            $reservation = Reservation::all();
+            $reservation = Reservation::with('service')->get();
             return view('reservation.index', compact('reservation'));
         }
 

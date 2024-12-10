@@ -72,7 +72,7 @@
                                             {{ $r->notes}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $r->service_id}}
+                                            {{ $r->service->name}}
                                         </td>
                                     </tr>
                                     @endforeach

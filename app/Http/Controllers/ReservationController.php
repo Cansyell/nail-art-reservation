@@ -94,6 +94,10 @@ class ReservationController extends Controller
                 ->with('error', 'Failed to book appointment. Please try again.' . $e->getMessage());
         }put();
         }
+        public function index(){
+            $reservation = Reservation::all();
+            return view('reservation.index', compact('reservation'));
+        }
 
     }
 

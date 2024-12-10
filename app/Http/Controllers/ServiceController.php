@@ -77,10 +77,11 @@ class ServiceController extends Controller
     }
     public function destroy(Service $service){
 
-        if($service->photo && Storage::exists($service->photo)){
+        if ($service->photo && Storage::exists($service->photo)) {
             Storage::delete($service->photo);
         }
+
         $service->delete();
-        return redirect()->route('service.index')->with('succes','Service deleted successfully');
+        return redirect()->route('service.index')->with('success', 'Service deleted successfully.');
     }
 }

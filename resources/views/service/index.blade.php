@@ -58,12 +58,13 @@
                                             {{ $s->price}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            <a href="{{ route('service.edit', $s->id)}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                                <a href="{{ route('service.edit',$s->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                                             <form action="{{ route('service.destroy', $s->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete Service</button>
                                             </form>
+
                                         </td>
                                     </tr>
                                     @endforeach

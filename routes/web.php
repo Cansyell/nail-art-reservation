@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\TransactionController;
 
 Route::get('/', [FrontController::class, 'index'])->name('front.index');
 Route::get('/reservation', [FrontController::class, 'reservation'])->name('reservation');
@@ -24,8 +25,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/service', [ServiceController::class, 'store'])->name('service.store');
     Route::get('/service/{service}/edit', [ServiceController::class, 'edit'])->name('service.edit');
     Route::put('/service/{service}', [ServiceController::class, 'update'])->name('service.update');
-    Route::delete('/service/destroy', [ServiceController::class, 'destroy'])->name('service.destroy');
+    Route::delete('/service/{service}', [ServiceController::class, 'destroy'])->name('service.destroy');
     
+    Route::get('/reservations', [ReservationController::class, 'index'])->name('reservation.index');
+
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transaction.index');
 
 });
 

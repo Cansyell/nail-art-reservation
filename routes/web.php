@@ -6,13 +6,36 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TransactionController;
+use App\Models\Reservation;
+use Carbon\Carbon;
 
 Route::get('/', [FrontController::class, 'index'])->name('front.index');
 Route::get('/reservation', [FrontController::class, 'reservation'])->name('reservation');
 Route::post('/book-appointment', [ReservationController::class, 'book'])->name('book.appointment');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $reservations = Reservation::where('status', 'completed')
+    ->whereYear('created_at', now()->year)
+    ->get()
+    ->groupBy(function($date) {
+        return Carbon::parse($date->created_at)->format('m');
+    })
+    ->map(function($group) {
+        return $group->count();
+    });
+
+// Prepare data for chart
+$months = [];
+$reservationCounts = [];
+
+// Ensure all months are represented
+for ($i = 1; $i <= 12; $i++) {
+    $monthKey = str_pad($i, 2, '0', STR_PAD_LEFT);
+    $months[] = Carbon::create()->month($i)->format('F');
+    $reservationCounts[] = $reservations->get($monthKey, 0);
+}
+
+return view('dashboard', compact('months', 'reservationCounts'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

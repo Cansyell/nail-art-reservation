@@ -12,6 +12,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 
+    {{-- flowbite --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
         body, html {
@@ -85,7 +89,7 @@
         
         <div class="w-full md:w-1/2 mt-8 md:mt-0">
             <img 
-                src="{{ asset('/img/banner nail.jpeg') }}" 
+                src="{{ asset('/img/banner-nail.jpeg') }}" 
                 alt="Nail Art Design" 
                 class="rounded-lg shadow-lg w-full h-auto object-cover"
             >
@@ -112,6 +116,69 @@
                     </a>
                 </div>
                 @endforeach
+            </div>
+        </div>
+    </div>
+
+    {{-- Gallery Carousel Section --}}
+   <div id="gallery" class="py-16 bg-pink-50">
+        <div class="container mx-auto px-4">
+            <h3 class="text-3xl font-bold text-center text-pink-600 mb-10">
+                Our Gallery
+            </h3>
+            
+            <div id="default-carousel" class="relative w-full" data-carousel="slide">
+                <!-- Carousel wrapper -->
+                <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+                    <!-- Item 1 -->
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="{{ asset('img/Nail-Gel-Medium.jpg') }}" 
+                            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" 
+                            alt="Nail Art Design 1">
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="{{ asset('img/Nail-Gel-Medium.jpg') }}" 
+                            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" 
+                            alt="Nail Art Design 2">
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="{{ asset('img/Nail-Gel-Medium.jpg') }}" 
+                            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" 
+                            alt="Nail Art Design 3">
+                    </div>
+                    <!-- Item 4 -->
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="{{ asset('img/Nail-Gel-Medium.jpg') }}" 
+                            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" 
+                            alt="Nail Art Design 4">
+                    </div>
+                    <!-- Item 5 -->
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="{{ asset('img/Nail-Gel-Medium.jpg') }}" 
+                            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" 
+                            alt="Nail Art Design 5">
+                    </div>
+                </div>
+                
+                <!-- Slider controls -->
+                <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
+                        <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                        </svg>
+                        <span class="sr-only">Previous</span>
+                    </span>
+                </button>
+                <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
+                        <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                        </svg>
+                        <span class="sr-only">Next</span>
+                    </span>
+                </button>
             </div>
         </div>
     </div>
@@ -143,6 +210,49 @@
     </div>
 
     <script>
+         document.addEventListener('DOMContentLoaded', (event) => {
+            const carousel = document.getElementById('carousel-inner');
+            const carouselItems = document.querySelectorAll('.carousel-item');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const dots = document.querySelectorAll('.carousel-dot');
+            
+            let currentIndex = 0;
+            const totalItems = carouselItems.length;
+
+            function updateCarousel() {
+                carousel.style.transform = translateX(-${currentIndex * 100}%);
+                
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('bg-pink-600', index === currentIndex);
+                    dot.classList.toggle('bg-gray-300', index !== currentIndex);
+                });
+            }
+
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % totalItems;
+                updateCarousel();
+            });
+
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+                updateCarousel();
+            });
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    currentIndex = parseInt(dot.getAttribute('data-index'));
+                    updateCarousel();
+                });
+            });
+
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % totalItems;
+                updateCarousel();
+            }, 5000);
+        });
+
+
         document.getElementById('searchInput').addEventListener('input', function(){
             const query = this.value.toLowerCase();
             const serviceItems = document.querySelectorAll('.service-item');

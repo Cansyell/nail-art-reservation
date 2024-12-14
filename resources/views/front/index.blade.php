@@ -250,9 +250,9 @@
                 currentIndex = (currentIndex + 1) % totalItems;
                 updateCarousel();
             }, 5000);
-        });
-
-
+        });   
+    </script>
+    <script>
         document.getElementById('searchInput').addEventListener('input', function(){
             const query = this.value.toLowerCase();
             const serviceItems = document.querySelectorAll('.service-item');

@@ -65,7 +65,7 @@ class ReservationController extends Controller
 
         $midtransParams = [
             'transaction_details' => [
-                'order_id' => 'snail-reservation-'.$selectedService->name. $transaction->id,
+                'order_id' => 'snail_reservation-'. $transaction->id,
                 'gross_amount' => $finalAmount,
             ],
             'customer_details' => [

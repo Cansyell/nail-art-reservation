@@ -25,6 +25,9 @@
                             <table class="w-full text-sm text-left rtl:text-right text-gray-500">
                                 <thead class="text-xs text-gray-200 uppercase bg-pink-400">
                                     <tr>
+                                    <th scope="col" class="px-6 py-3">
+                                            Reservation ID
+                                        </th>
                                         <th scope="col" class="px-6 py-3">
                                             Customer Name
                                         </th>
@@ -38,9 +41,6 @@
                                             Reservation Date
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Status
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
                                             Notes
                                         </th>
                                         <th scope="col" class="px-6 py-3">
@@ -52,8 +52,10 @@
                                 <tbody>
                                     @foreach ($reservation as $r)
                                     <tr class="odd:bg-white even:bg-gray-50 border-b">
-                                            
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                            000{{ $r->id }}
+                                        </td> 
+                                        <th class="px-6 py-4" >
                                             {{ $r->customer_name }}
                                         </th>
                                         <td class="px-6 py-4">
@@ -64,9 +66,6 @@
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $r->reservation_date}}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ $r->status}}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $r->notes}}

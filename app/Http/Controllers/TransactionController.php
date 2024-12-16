@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class TransactionController extends Controller
 {
     public function index(){
-        $transaction = Transaction::with('service')->get();
+        $transaction = Transaction::with('service','reservations')->get();
         return view('transaction.index', compact('transaction'));
     }
 }

@@ -6,7 +6,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TransactionController;
-use App\Models\Reservation;
+use App\Models\Transaction;
 use Carbon\Carbon;
 
 Route::get('/', [FrontController::class, 'index'])->name('front.index');
@@ -14,7 +14,7 @@ Route::get('/reservation', [FrontController::class, 'reservation'])->name('reser
 Route::post('/book-appointment', [ReservationController::class, 'book'])->name('book.appointment');
 
 Route::get('/dashboard', function () {
-    $reservations = Reservation::where('status', 'completed')
+    $reservations = Transaction::where('payment_status', 'paid')
     ->whereYear('created_at', now()->year)
     ->get()
     ->groupBy(function($date) {

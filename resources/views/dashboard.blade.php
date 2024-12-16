@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <h3 class="text-lg font-semibold mb-4"> Succesfull Reservation per Month </h3>
+                    <h3 class="text-lg font-semibold mb-4"> Succesfull Transaction per Month </h3>
                     <div class="w-full">
                         <canvas id="reservationChart"></canvas>
                 </div>
@@ -27,7 +27,7 @@
                 data: {
                     labels: @json($months),
                     datasets: [{
-                        label: 'Reservations',
+                        label: 'Transactions',
                         data: @json($reservationCounts),
                         backgroundColor: 'rgba(246, 3, 149, 0.6)',
                         borderColor: 'rgb(192, 75, 116)',
@@ -41,7 +41,7 @@
                             beginAtZero: true,
                             title: {
                                 display: true,
-                                text: 'Number of Reservations'
+                                text: 'Number of Transactions'
                             }
                         },
                         x: {

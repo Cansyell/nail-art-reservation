@@ -20,6 +20,7 @@
     <style>
         body, html {
             overflow-x : hidden;
+            padding-bottom :2rem;
         }
         *{
             box-sizing : border-box;
@@ -184,7 +185,7 @@
     </div>
 
     {{-- Footer --}}
-    <footer class="bg-pink-200 py-6 text-center" id="contact">
+    <footer class="bg-pink-200 py-6 text-center pb-20" id="contact">
         <p class="text-gray-700">© 2024 Snail Studio. All rights reserved.</p>
         <div class="mt-4 space-x-4">
             <a href="https://www.instagram.com/ns_esyaaa?igsh=MW85OGZ0Z3I2YnRscA==" class="text-blue-600 hover:text-blue-800"><i class="fab fa-instagram"></i></a>

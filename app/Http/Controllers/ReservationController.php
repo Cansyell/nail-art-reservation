@@ -19,7 +19,7 @@ class ReservationController extends Controller
             'customer_phone' => 'required|numeric',
             'customer_email' => 'required|email|max:255',
             'service_id' => 'required|exists:services,id',
-            'reservation_date' => 'required|date|after:today',
+            'reservation_date' => 'required|date',
             'notes' => 'nullable|string|max:500',
             'discount' => 'nullable|numeric|min:0|max:100',
         ]);

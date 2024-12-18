@@ -17,7 +17,7 @@
           <h1 class="text-3xl font-bold text-gray-800 mb-4">Transaction Successful</h1>
           
           <p class="text-gray-600 mb-6">
-            Thank you for your payment. Your transaction has been completed successfully.
+            Thank you for your appointment, please screenshot this page for confirmation.
           </p>
           
           <div class="mb-4">

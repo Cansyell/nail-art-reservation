@@ -3,7 +3,10 @@
 
 Nail art reservation service at Snail Studio using Laravel 11, MySql, Midtrans Payment Gateway.
 
-# Daftar Isi
+### Link Demo
+https://snailstudio.cansyell.com/
+
+# List of Contents
 * Project Installation
 * First Configuration
 * Route Structure
@@ -65,30 +68,30 @@ MIDTRANS_PRODUCTION=false
 ```
 ### Route Web PHP List
 
-| Method | Route                         | Nama Route                | Controller                                    | Fungsi                       |
-|--------|-------------------------------|---------------------------|-----------------------------------------------|------------------------------|
-| GET    | /                             | front.index               | FrontController::class, 'index'               | halaman landing page         |
-| GET    | /reservation                  | reservation               | ReservationController::class, 'reservation'   | halaman form reservation     |
-| GET    | /reservation/finish           | reservation.finish        | ReservationController::class, 'finish'        | halaman finish transaksi     |
-| POST   | /book-appointment             | book.appointment          | ReservationController::class, 'book'          | proses pemesanan appointment |
-| GET    | /dashboard                    | dashboard                 | Anonymous function (in-line)                  | halaman dashboard (transaksi)|
-| GET    | /profile                      | profile.edit              | ProfileController::class, 'edit'              | halaman edit profil          |
-| PATCH  | /profile                      | profile.update            | ProfileController::class, 'update'            | update profil                |
-| DELETE | /profile                      | profile.destroy           | ProfileController::class, 'destroy'           | hapus profil                 |
-| GET    | /service                      | service.index             | ServiceController::class, 'index'             | halaman layanan              |
-| GET    | /service/create               | service.create            | ServiceController::class, 'create'            | halaman tambah layanan       |
-| POST   | /service                      | service.store             | ServiceController::class, 'store'             | simpan layanan baru          |
-| GET    | /service/{service}/edit       | service.edit              | ServiceController::class, 'edit'              | halaman edit layanan         |
-| PUT    | /service/{service}            | service.update            | ServiceController::class, 'update'            | update layanan               |
-| DELETE | /service/{service}            | service.destroy           | ServiceController::class, 'destroy'           | hapus layanan                |
-| GET    | /reservations                 | reservation.index         | ReservationController::class, 'index'         | halaman daftar reservasi     |
-| GET    | /transactions                 | transaction.index         | TransactionController::class, 'index'         | halaman daftar transaksi     |
+| Method | Route                         | Route Name                | Controller                                    | Function                      |
+|--------|-------------------------------|---------------------------|-----------------------------------------------|-------------------------------|
+| GET    | /                             | front.index               | FrontController::class, 'index'               | landing page                  |
+| GET    | /reservation                  | reservation               | ReservationController::class, 'reservation'   | reservation form page         |
+| GET    | /reservation/finish           | reservation.finish        | ReservationController::class, 'finish'        | transaction finish page       |
+| POST   | /book-appointment             | book.appointment          | ReservationController::class, 'book'          | book appointment process      |
+| GET    | /dashboard                    | dashboard                 | Anonymous function (in-line)                  | dashboard page (transactions) |
+| GET    | /profile                      | profile.edit              | ProfileController::class, 'edit'              | edit profile page             |
+| PATCH  | /profile                      | profile.update            | ProfileController::class, 'update'            | update profile                |
+| DELETE | /profile                      | profile.destroy           | ProfileController::class, 'destroy'           | delete profile                |
+| GET    | /service                      | service.index             | ServiceController::class, 'index'             | services page                 |
+| GET    | /service/create               | service.create            | ServiceController::class, 'create'            | add service page              |
+| POST   | /service                      | service.store             | ServiceController::class, 'store'             | save new service              |
+| GET    | /service/{service}/edit       | service.edit              | ServiceController::class, 'edit'              | edit service page             |
+| PUT    | /service/{service}            | service.update            | ServiceController::class, 'update'            | update service                |
+| DELETE | /service/{service}            | service.destroy           | ServiceController::class, 'destroy'           | delete service                |
+| GET    | /reservations                 | reservation.index         | ReservationController::class, 'index'         | reservations list page        |
+| GET    | /transactions                 | transaction.index         | TransactionController::class, 'index'         | transactions list page        |
 
 ### Route API PHP 
 
-| Method | Route           | Nama Route     | Controller                             | Fungsi                  |
+| Method | Route           | Route Name    | Controller                             | Function                  |
 |--------|-----------------|----------------|----------------------------------------|-------------------------|
-| POST   | /callback       | callback       | MidtransController::class, 'callback'  | menerima callback dari Midtrans |
+| POST   | /callback       | callback       | MidtransController::class, 'callback'  | Callback Midtrans |
 
 ### Midtrans Callback Documentation
 Endpoint

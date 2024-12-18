@@ -31,6 +31,17 @@
             font-weight: <weight>;
             font-style: normal;
         }
+        .sort-filter-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .filter-price-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
         @media (max-width: 768px) {
             .desktop-nav {
@@ -54,15 +65,6 @@
         <img src="{{ asset('img/icon.svg')}}" style="width:50px;" class="m-auto"> 
             <h1 class="text-2xl font-bold text-pink-600 desktop-nav">Snail Studio</h1>
         </div>
-            <div class="relative ml-auto mr-3">
-                <input 
-                    type="text" 
-                    id="searchInput"
-                    placeholder="Search services..." 
-                    class="pl-8 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
-                >
-                <i class="fas fa-search absolute left-3 top-3 text-gray-400 text-sm"></i>
-            </div>
         <div class="flex items-center space-x-4 desktop-nav">
             <div class="space-x-4 mr-4">
                 <a href="#services" class="text-blue-500 hover:text-blue-700 transition">Services</a>
@@ -103,9 +105,32 @@
             <h3 class="text-3xl font-bold text-center text-pink-600 mb-10">
                 Our Services
             </h3>
+            
+            {{-- New Sorting and Filtering Container --}}
+            <div class="sort-filter-container">
+                <div class="relative ml-auto mr-3">
+                    <input 
+                        type="text" 
+                        id="searchInput"
+                        placeholder="Search services..." 
+                        class="pl-8 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
+                    >
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400 text-sm"></i>
+                </div>
+                
+                <div class="filter-price-container">
+                    <label for="priceFilter" class="text-gray-700">Sort by Price:</label>
+                    <select id="priceFilter" class="px-3 py-2 border rounded-md">
+                        <option value="default">Default</option>
+                        <option value="low-to-high">Low to High</option>
+                        <option value="high-to-low">High to Low</option>
+                    </select>
+                </div>
+            </div>
+            
             <div id="servicesContainer" class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @foreach ($services as $s)
-                <div class="service-item text-center bg-pink-50 p-6 rounded-lg shadow-sm flex flex-col">
+                <div class="service-item text-center bg-pink-50 p-6 rounded-lg shadow-sm flex flex-col" data-price="{{ $s->price }}">
                     <img src="{{ asset('img/icon.svg')}}" style="width:40px;" class="m-auto"> 
                     <h4 class="text-xl font-semibold mb-2 text-gray-800">{{ $s->name }}</h4>
                     <img src="{{ Storage::url($s->photo)}}" alt="" class="mb-4 rounded-xl" style="height: 400px; width:100%">
@@ -195,7 +220,7 @@
     </footer>
 
     {{-- Mobile Bottom Navigation --}}
-    <div class="mobile-bottom-nav fixed bottom-0 left-0 right-0 bg-white shadow-lg flex justify-around py-3 border-t border-gray-200" style="display: none;">
+    <div class=" mobile-bottom-nav fixed bottom-0 left-0 right-0 bg-white shadow-lg flex justify-around py-3 border-t border-gray-200" style="display: none;">
         <a href="#services" class="text-center text-gray-600 hover:text-blue-500">
             <i class="fas fa-brush text-xl"></i>
             <span class="block text-xs mt-1">Services</span>
@@ -254,26 +279,55 @@
         });   
     </script>
     <script>
-        document.getElementById('searchInput').addEventListener('input', function(){
-            const query = this.value.toLowerCase();
+        document.addEventListener('DOMContentLoaded', () => {
+            const serviceContainer = document.getElementById('servicesContainer');
+            const searchInput = document.getElementById('searchInput');
+            const priceFilter = document.getElementById('priceFilter');
             const serviceItems = document.querySelectorAll('.service-item');
             const heroSection = document.getElementById('heroSection');
 
-            let anyMatch = false;
+            // Search Functionality
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                let anyMatch = false;
 
-            serviceItems.forEach(item => {
-                const name = item.querySelector('h4').textContent.toLowerCase();
-                const description = item.querySelector('p').textContent.toLowerCase();
+                serviceItems.forEach(item => {
+                    const name = item.querySelector('h4').textContent.toLowerCase();
+                    const description = item.querySelector('p:nth-of-type(1)').textContent.toLowerCase();
 
-                if(name.includes(query) || description.includes(query)){
-                    item.style.display ='flex';
-                    anyMatch = true;
-                } else{
-                    item.style.display ='none';
-                }
+                    if (name.includes(query) || description.includes(query)) {
+                        item.style.display = 'flex';
+                        anyMatch = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                heroSection.style.display = query ? 'none' : 'flex';
             });
 
-            heroSection.style.display = query ? 'none':'flex';
+            // Price Sorting Functionality
+            priceFilter.addEventListener('change', function() {
+                const serviceArray = Array.from(serviceItems);
+                
+                serviceArray.sort((a, b) => {
+                    const priceA = parseFloat(a.dataset.price);
+                    const priceB = parseFloat(b.dataset.price);
+
+                    switch(this.value) {
+                        case 'low-to-high':
+                            return priceA - priceB;
+                        case 'high-to-low':
+                            return priceB - priceA;
+                        default:
+                            return 0;
+                    }
+                });
+
+                // Clear and re-append sorted items
+                serviceContainer.innerHTML = '';
+                serviceArray.forEach(item => serviceContainer.appendChild(item));
+            });
         });
     </script>
 </body>

@@ -99,6 +99,17 @@ class ReservationController extends Controller
             $reservation = Reservation::with('service')->get();
             return view('reservation.index', compact('reservation'));
         }
+        public function finish(Request $request){
+            $orderId = $request->input('order_id');
+            $transactionId = str_replace('snail_reservation-','', $orderId);
+            $transaction = Transaction::findorFail($transactionId);
+
+            return view('reservation.succes',[
+                'transactionId'=>$transactionId,
+                'orderId'=>$orderId,
+                'totalAmount'=>$transaction->final_amount
+            ]);
+        }
 
     }
 

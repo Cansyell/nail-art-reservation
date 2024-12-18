@@ -164,25 +164,25 @@
                     </div>
                     <!-- Item 2 -->
                     <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="{{ asset('img/Nail-Gel-Medium.jpg') }}" 
+                        <img src="{{ asset('img/1.jpg') }}" 
                             class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" 
                             alt="Nail Art Design 2">
                     </div>
                     <!-- Item 3 -->
                     <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="{{ asset('img/Nail-Gel-Medium.jpg') }}" 
+                        <img src="{{ asset('img/2.jpg') }}" 
                             class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" 
                             alt="Nail Art Design 3">
                     </div>
                     <!-- Item 4 -->
                     <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="{{ asset('img/Nail-Gel-Medium.jpg') }}" 
+                        <img src="{{ asset('img/3.jpg') }}" 
                             class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" 
                             alt="Nail Art Design 4">
                     </div>
                     <!-- Item 5 -->
                     <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="{{ asset('img/Nail-Gel-Medium.jpg') }}" 
+                        <img src="{{ asset('img/4.jpg') }}" 
                             class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" 
                             alt="Nail Art Design 5">
                     </div>

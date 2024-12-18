@@ -1,66 +1,136 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Snail Studio Laravel 11
 
-## About Laravel
+Nail art reservation service at Snail Studio using Laravel 11, MySql, Midtrans Payment Gateway.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# Daftar Isi
+* Project Installation
+* First Configuration
+* Route Structure
+* Callback Midtrans
+* Security and Best Practices
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Install my-project with git
 
-## Laravel Sponsors
+```bash
+git clone https://github.com/Cansyell/nail-art-reservation.git
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+cd nail-art-reservation
+```
+install depedensi
 
-### Premium Partners
+```bash
+composer install
+```
+Configurasi Environment
+```bash
+cp .env.example .env
+```
+Generate Application Key
+```bash
+php artisan key:generate
+```
+Configuration Database
+```bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nail_art_reservation
+DB_USERNAME=root
+DB_PASSWORD=
+```
+Migration Database
+```bash
+php artisan migrate
+```
+Storage Link
+```bash
+php artisan storage:link
+```
+Start Server
+```bash
+php artisan serve
+```
+Configuration Midtrans Variable
+```bash
+MIDTRANS_SERVER_KEY=your_server_key
+MIDTRANS_CLIENT_KEY=your_client_key
+MIDTRANS_PRODUCTION=false
+```
+### Route Web PHP List
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+| Method | Route                         | Nama Route                | Controller                                    | Fungsi                       |
+|--------|-------------------------------|---------------------------|-----------------------------------------------|------------------------------|
+| GET    | /                             | front.index               | FrontController::class, 'index'               | halaman landing page         |
+| GET    | /reservation                  | reservation               | ReservationController::class, 'reservation'   | halaman form reservation     |
+| GET    | /reservation/finish           | reservation.finish        | ReservationController::class, 'finish'        | halaman finish transaksi     |
+| POST   | /book-appointment             | book.appointment          | ReservationController::class, 'book'          | proses pemesanan appointment |
+| GET    | /dashboard                    | dashboard                 | Anonymous function (in-line)                  | halaman dashboard (transaksi)|
+| GET    | /profile                      | profile.edit              | ProfileController::class, 'edit'              | halaman edit profil          |
+| PATCH  | /profile                      | profile.update            | ProfileController::class, 'update'            | update profil                |
+| DELETE | /profile                      | profile.destroy           | ProfileController::class, 'destroy'           | hapus profil                 |
+| GET    | /service                      | service.index             | ServiceController::class, 'index'             | halaman layanan              |
+| GET    | /service/create               | service.create            | ServiceController::class, 'create'            | halaman tambah layanan       |
+| POST   | /service                      | service.store             | ServiceController::class, 'store'             | simpan layanan baru          |
+| GET    | /service/{service}/edit       | service.edit              | ServiceController::class, 'edit'              | halaman edit layanan         |
+| PUT    | /service/{service}            | service.update            | ServiceController::class, 'update'            | update layanan               |
+| DELETE | /service/{service}            | service.destroy           | ServiceController::class, 'destroy'           | hapus layanan                |
+| GET    | /reservations                 | reservation.index         | ReservationController::class, 'index'         | halaman daftar reservasi     |
+| GET    | /transactions                 | transaction.index         | TransactionController::class, 'index'         | halaman daftar transaksi     |
 
-## Contributing
+### Route API PHP 
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Method | Route           | Nama Route     | Controller                             | Fungsi                  |
+|--------|-----------------|----------------|----------------------------------------|-------------------------|
+| POST   | /callback       | callback       | MidtransController::class, 'callback'  | menerima callback dari Midtrans |
 
-## Code of Conduct
+### Midtrans Callback Documentation
+Endpoint
+ 
+URL: /api/callback
+Method: POST
+Controller: MidtransController::class, 'callback'
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+ 
+Function: callback()
 
-## Security Vulnerabilities
+Required Parameters
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+|Parameter|	Type|	Description| 
+|--------|-----------------|----------------|
+|order_id	|String|	Unique order ID
+|status_code|	String	|Midtrans status code|
+|gross_amount|	Numeric	|Total payment amount|
+|signature_key|	String	|Signature key for verification|
+|transaction_status|	String|	Status of the transaction|
 
-## License
+Transaction Statuses
+```bash
+capture: Payment successful
+settlement: Payment completed
+pending: Payment is awaiting
+deny: Payment denied
+cancel: Payment canceled
+```
+### Callback Process Flow
+Validate input parameters:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Ensure that all required parameters are present in the request.
+Verify the signature:
+
+Use the ```signature_key``` to verify that the received data has not been modified and is from Midtrans.
+Find the transaction in the database:
+
+Retrieve the transaction using the ```order_id``` received in the callback.
+Update payment status:
+
+Update the transaction status in the database based on the ```transaction_status``` (capture, settlement, pending, deny, cancel).
+Send a response:
+
+Send an appropriate response indicating that the callback was successfully processed.

@@ -35,19 +35,16 @@
                                             Service
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Total Amount
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Discount
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Final Amount
+                                            Total 
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             Payment Status
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             Payment Method
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Paid Time
                                         </th>
                                     </tr>
                                 </thead>
@@ -68,16 +65,13 @@
                                             {{ $t->total_amount }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $t->discount}}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ $t->final_amount}}
-                                        </td>
-                                        <td class="px-6 py-4">
                                             {{ $t->payment_status}}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $t->payment_method}}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ $t->updated_at}}
                                         </td>
                                     </tr>
                                     @endforeach

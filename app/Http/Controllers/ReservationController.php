@@ -104,7 +104,7 @@ class ReservationController extends Controller
             $transactionId = str_replace('snail_reservation-','', $orderId);
             $transaction = Transaction::findorFail($transactionId);
 
-            return view('reservation.succes',[
+            return view('reservation.success',[
                 'transactionId'=>$transactionId,
                 'orderId'=>$orderId,
                 'totalAmount'=>$transaction->final_amount

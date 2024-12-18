@@ -11,7 +11,7 @@ use Carbon\Carbon;
 
 Route::get('/', [FrontController::class, 'index'])->name('front.index');
 Route::get('/reservation', [FrontController::class, 'reservation'])->name('reservation');
-Route::get('/reservation/finish', [FrontController::class, 'finish'])->name('reservation.finish');
+Route::get('/reservation/finish', [ReservationController::class, 'finish'])->name('reservation.finish');
 Route::post('/book-appointment', [ReservationController::class, 'book'])->name('book.appointment');
 
 Route::get('/dashboard', function () {

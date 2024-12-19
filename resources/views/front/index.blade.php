@@ -135,7 +135,7 @@
                     <h4 class="text-xl font-semibold mb-2 text-gray-800">{{ $s->name }}</h4>
                     <img src="{{ Storage::url($s->photo)}}" alt="" class="mb-4 rounded-xl" style="height: 400px; width:100%">
                     <p class="text-gray-600 mb-4 text-justify">{{ $s->description }}</p>
-                    <p class="text-gray-600 mb-4">Rp. {{ number_format($s->price, 00)}}</p>
+                    <p class="text-gray-600 mb-4 font-bold">Rp. {{ number_format($s->price, 00)}}</p>
                     <a href="{{ route('reservation', ['service' => $s->id]) }}" 
                        class="mt-auto bg-blue-400 text-white px-4 py-2 rounded-full hover:bg-blue-500 transition">
                         Book This Service

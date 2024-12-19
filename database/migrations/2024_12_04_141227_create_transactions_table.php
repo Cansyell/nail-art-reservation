@@ -21,7 +21,8 @@ return new class extends Migration
                 'pending', 
                 'paid', 
                 'partial', 
-                'refunded'
+                'refunded',
+                'failed'
             ])->default('pending');
             $table->string('payment_method')->nullable();
             $table->timestamps();

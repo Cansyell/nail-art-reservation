@@ -77,6 +77,7 @@ class MidtransController extends Controller
             case 'pending':
                 $transaction->update(['payment_status' => 'pending']);
                 break;
+            case 'expire':
             case 'deny':
             case 'cancel':
                 $transaction->update(['payment_status' => 'failed']);

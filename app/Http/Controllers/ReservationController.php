@@ -104,42 +104,53 @@ class ReservationController extends Controller
             $reservation = Reservation::with('service')->get();
             return view('reservation.index', compact('reservation'));
         }
-        public function finish(Request $request){
+        public function finish(Request $request)
+        {
             $orderId = $request->input('order_id');
             $transactionId = str_replace('snail_reservation-', '', $orderId);
-
+            
             try {
-                $transaction = Transaction::findorFail($transactionId);
-
-                // Determine transaction status
-                $transactionStatus = 'pending'; // Default status
-
-                // Check transaction status from your database
-                if ($transaction->status === 'paid') {
-                    $transactionStatus = 'success';
-                } elseif ($transaction->status === 'failed' || $transaction->status === 'cancelled') {
-                    $transactionStatus = 'failed';
+                $transaction = Transaction::findOrFail($transactionId);
+                
+                // Check payment status from database
+                switch($transaction->payment_status) {
+                    case 'paid':
+                        return view('reservation.success', [
+                            'transactionId' => $transactionId,
+                            'orderId' => $orderId,
+                            'totalAmount' => $transaction->final_amount,
+                            'transactionStatus' => 'success',
+                            'message' => 'Thank you for your payment. Please save this page as your payment proof. You can take a screenshot or download it for your records.'
+                        ]);
+                        
+                    case 'pending':
+                        return view('reservation.success', [
+                            'transactionId' => $transactionId,
+                            'orderId' => $orderId,
+                            'totalAmount' => $transaction->final_amount,
+                            'transactionStatus' => 'pending',
+                            'message' => 'Your transaction is being processed. Please complete your payment within the time limit.'
+                        ]);
+                        
+                    default:
+                        return view('reservation.success', [
+                            'transactionId' => $transactionId,
+                            'orderId' => $orderId,
+                            'totalAmount' => $transaction->final_amount,
+                            'transactionStatus' => 'failed',
+                            'message' => 'Payment failed. Please try again or contact our support.'
+                        ]);
                 }
-
-                return view('reservation.success', [
-                    'transactionId' => $transactionId,
-                    'orderId' => $orderId,
-                    'totalAmount' => $transaction->final_amount,
-                    'transactionStatus' => $transactionStatus,
-                    'errorMessage' => $transaction->error_message ?? 'Transaction could not be completed', // Assuming you have error_message column
-                ]);
-
+                
             } catch (\Exception $e) {
-                // Handle case where transaction is not found
                 return view('reservation.success', [
                     'transactionId' => $transactionId,
                     'orderId' => $orderId,
                     'totalAmount' => 0,
                     'transactionStatus' => 'failed',
-                    'errorMessage' => 'Transaction not found'
+                    'message' => 'Transaction not found'
                 ]);
             }
         }
-
     }
 

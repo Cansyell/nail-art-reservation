@@ -76,6 +76,11 @@ class ReservationController extends Controller
             'enabled_payments' => [
                 'gopay', 'bank_transfer', 'alfamart', 'indomaret', 'shopeepay',
             ],
+            'expiry' => [
+                'start_time' => date('Y-m-d H:i:s O'),
+                'unit' => 'minute',
+                'duration' => 15, // 90 menit = 1.5 jam
+            ],
             'vtweb' => [],
         ];
 
@@ -101,14 +106,39 @@ class ReservationController extends Controller
         }
         public function finish(Request $request){
             $orderId = $request->input('order_id');
-            $transactionId = str_replace('snail_reservation-','', $orderId);
-            $transaction = Transaction::findorFail($transactionId);
+            $transactionId = str_replace('snail_reservation-', '', $orderId);
 
-            return view('reservation.success',[
-                'transactionId'=>$transactionId,
-                'orderId'=>$orderId,
-                'totalAmount'=>$transaction->final_amount
-            ]);
+            try {
+                $transaction = Transaction::findorFail($transactionId);
+
+                // Determine transaction status
+                $transactionStatus = 'pending'; // Default status
+
+                // Check transaction status from your database
+                if ($transaction->status === 'paid') {
+                    $transactionStatus = 'success';
+                } elseif ($transaction->status === 'failed' || $transaction->status === 'cancelled') {
+                    $transactionStatus = 'failed';
+                }
+
+                return view('reservation.success', [
+                    'transactionId' => $transactionId,
+                    'orderId' => $orderId,
+                    'totalAmount' => $transaction->final_amount,
+                    'transactionStatus' => $transactionStatus,
+                    'errorMessage' => $transaction->error_message ?? 'Transaction could not be completed', // Assuming you have error_message column
+                ]);
+
+            } catch (\Exception $e) {
+                // Handle case where transaction is not found
+                return view('reservation.success', [
+                    'transactionId' => $transactionId,
+                    'orderId' => $orderId,
+                    'totalAmount' => 0,
+                    'transactionStatus' => 'failed',
+                    'errorMessage' => 'Transaction not found'
+                ]);
+            }
         }
 
     }
